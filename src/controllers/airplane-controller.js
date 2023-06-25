@@ -63,8 +63,29 @@ async function getAirplane(req, res) {
         .json(ErrorResponse);
     }
 }
+
+/**
+ * DELETE : /airplanes/:id
+ * req-body {modelNumber :'airbus30}
+ */
+
+async function destoryAirplane(req, res) {
+    try {
+        const airplanes = await AirplaneService.destroyAirplane(req.param.id);
+        SuccessResponse.data = airplanes;
+        return res
+        .status(StatusCode.OK)
+        .json(SuccessResponse);
+    } catch(error) {
+        ErrorResponse.error = error;
+        return res   
+        .status(error.StatusCode)
+        .json(ErrorResponse);
+    }
+}
 module.exports = {
     createAirplane,
     getAirplanes,
-    getAirplane
+    getAirplane,
+    destoryAirplane
 }
